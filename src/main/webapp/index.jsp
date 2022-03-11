@@ -2,7 +2,7 @@
 <html>
 <body>
 
-	<h2>Welcome to Elearn Website!</h2>
+	<h2>Hi! Welcome to Elearn Website!</h2>
 
 
 </body>
