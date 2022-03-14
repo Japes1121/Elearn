@@ -6,15 +6,24 @@ import java.sql.SQLException;
 
 class MySQLConnector {
 
-	static Connection getMySQLConnection() throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ELEARN", "dev", "dev");
-		return con;
+	static Connection getMySQLConnection() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ELEARN", "dev", "dev");
+			return con;
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
-	static void closeConnection(Connection con) throws SQLException {
+	static void closeConnection(Connection con) {
 		if (con != null) {
-			con.close();
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
