@@ -4,7 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Path;
 
-@Path("/test")
+@Path("/learn/test")
 public class TestResource {
 
 	@GET

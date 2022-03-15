@@ -16,8 +16,6 @@
 	
 	<filter-mapping>
         <filter-name>Jersey Filter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/learn/*</url-pattern>
     </filter-mapping>
-	
-
 </web-app>
