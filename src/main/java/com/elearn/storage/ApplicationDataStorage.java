@@ -20,7 +20,7 @@ public class ApplicationDataStorage {
 		MySQLConnector.closeConnection(con);
 	}
 
-	static void addCategory(String categoryName) {
+	public static void addCategory(String categoryName) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -33,7 +33,7 @@ public class ApplicationDataStorage {
 		}
 	}
 
-	static void updateCategory(int categoryId, String categoryName) {
+	public static void updateCategory(int categoryId, String categoryName) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -47,7 +47,7 @@ public class ApplicationDataStorage {
 		}
 	}
 
-	static void deleteCategory(int categoryId) {
+	public static void deleteCategory(int categoryId) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -60,7 +60,7 @@ public class ApplicationDataStorage {
 		}
 	}
 
-	static void addDepartment(int categoryId, String departmentName) {
+	public static void addDepartment(int categoryId, String departmentName) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -74,7 +74,7 @@ public class ApplicationDataStorage {
 		}
 	}
 
-	static void updateDepartment(int departmentId, String departmentName) {
+	public static void updateDepartment(int departmentId, String departmentName) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -88,7 +88,7 @@ public class ApplicationDataStorage {
 		}
 	}
 
-	static void deleteDepartment(int departmentId) {
+	public static void deleteDepartment(int departmentId) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -101,7 +101,7 @@ public class ApplicationDataStorage {
 		}
 	}
 
-	static void addSubject(int departmentId, String subjectCode, String subjectName) {
+	public static void addSubject(int departmentId, String subjectCode, String subjectName) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -115,7 +115,7 @@ public class ApplicationDataStorage {
 		}
 	}
 
-	static void updateSubject(int subjectId, String subjectCode, String subjectName) {
+	public static void updateSubject(int subjectId, String subjectCode, String subjectName) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -135,7 +135,7 @@ public class ApplicationDataStorage {
 		}
 	}
 
-	static void deleteSubject(int subjectId) {
+	public static void deleteSubject(int subjectId) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -148,7 +148,7 @@ public class ApplicationDataStorage {
 		}
 	}
 
-	static List<Category> getAllCategories() {
+	public static List<Category> getAllCategories() {
 		Connection con = getConnection();
 		List<Category> catList = new ArrayList<>();
 		try {
@@ -171,7 +171,7 @@ public class ApplicationDataStorage {
 		return catList;
 	}
 
-	static List<Department> getAllDepartment() {
+	public static List<Department> getAllDepartment() {
 		Connection con = getConnection();
 		List<Department> depttList = new ArrayList<>();
 		try {
@@ -195,7 +195,7 @@ public class ApplicationDataStorage {
 		return depttList;
 	}
 
-	static List<Subject> getAllSubjects() {
+	public static List<Subject> getAllSubjects() {
 		Connection con = getConnection();
 		List<Subject> subList = new ArrayList<>();
 		try {
