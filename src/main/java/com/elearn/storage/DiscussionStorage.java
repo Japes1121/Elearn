@@ -66,7 +66,7 @@ public class DiscussionStorage {
 		List<Discussion> discussions = new ArrayList<>();
 		try {
 			Statement stmt = con.createStatement();
-			String query = "SELECT * FROM DEPARTMENT";
+			String query = "SELECT * FROM DISCUSSION";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs != null) {
 				while (rs.next()) {

@@ -64,7 +64,7 @@ public class ApplicationDataStorage {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String query = "INSERT INTODEPARTMENT (CATEGORY_ID,DEPARTMENT_NAME)" + "VALUES (" + categoryId + ",'"
+			String query = "INSERT INTO DEPARTMENT (CATEGORY_ID,DEPARTMENT_NAME)" + "VALUES (" + categoryId + ",'"
 					+ departmentName + "')";
 			stmt.executeUpdate(query);
 		} catch (Exception e) {
