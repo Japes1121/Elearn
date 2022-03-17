@@ -4,18 +4,18 @@
 
 <web-app>
 	<display-name>Elearn Web Application</display-name>
-
-	<filter>
-		<filter-name>Jersey Filter</filter-name>
-		<filter-class>org.glassfish.jersey.servlet.ServletContainer</filter-class>
-		<init-param>
-			<param-name>jersey.config.server.provider.packages</param-name>
-			<param-value>com.elearn.resource</param-value>
-		</init-param>
-	</filter>
-	
-	<filter-mapping>
-        <filter-name>Jersey Filter</filter-name>
-        <url-pattern>/learn/*</url-pattern>
-    </filter-mapping>
+    <servlet>
+	    <servlet-name>Jersey REST Service</servlet-name>
+	    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+	    <init-param>
+	        <param-name>jersey.config.server.provider.packages</param-name>
+	        <param-value>com.elearn.resource</param-value>
+	    </init-param>
+	    <load-on-startup>1</load-on-startup>
+	</servlet>
+	 
+	<servlet-mapping>
+	    <servlet-name>Jersey REST Service</servlet-name>
+	    <url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
 </web-app>
