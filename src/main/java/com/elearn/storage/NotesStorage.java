@@ -18,7 +18,7 @@ public class NotesStorage {
 		MySQLConnector.closeConnection(con);
 	}
 
-	static void addNotes(int subjectId, int postedBy, String uploadedTime) {
+	public static void addNotes(int subjectId, int postedBy, String uploadedTime) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -32,14 +32,11 @@ public class NotesStorage {
 		}
 	}
 
-	static void updateNotes(int subjectId, int postedBy, String uploadedTime, String updatedTime, int updatedBy) {
+	public static void updateNotes(int notesId, String updatedTime, int updatedBy) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
 			StringBuilder bldr = new StringBuilder("UPDATE NOTES SET ");
-			if (uploadedTime != null) {
-				bldr.append("UPLOADED_TIME= '").append(uploadedTime).append("' ");
-			}
 			if (updatedTime != null) {
 				bldr.append("UPDATED_TIME= '").append(updatedTime).append("' ");
 			}
@@ -47,7 +44,7 @@ public class NotesStorage {
 				bldr.append("UPLOADED_BY= ").append(updatedBy);
 			}
 
-			bldr.append(" WHERE SUBJECT_ID = ").append(subjectId);
+			bldr.append(" WHERE NOTES_ID = ").append(notesId);
 			stmt.executeUpdate(bldr.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,11 +53,11 @@ public class NotesStorage {
 		}
 	}
 
-	static void deleteNotes(int subjectId) {
+	public static void deleteNote(int noteId) {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String query = "DELETE FROM NOTES WHERE SUBJECT_ID = " + subjectId;
+			String query = "DELETE FROM NOTES WHERE NOTES_ID = " + noteId;
 			stmt.executeUpdate(query);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,12 +66,12 @@ public class NotesStorage {
 		}
 	}
 
-	static List<Notes> getNotes(int subjectId) {
+	public static List<Notes> getNotes(int subjectId) {
 		Connection con = getConnection();
 		List<Notes> notes = new ArrayList<>();
 		try {
 			Statement stmt = con.createStatement();
-			String query = "SELECT * FROM NOTES";
+			String query = "SELECT * FROM NOTES WHERE SUBJECT_ID = " + subjectId;
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs != null) {
 				while (rs.next()) {
@@ -95,5 +92,32 @@ public class NotesStorage {
 			closeConnection(con);
 		}
 		return notes;
+	}
+
+	public static Notes getParticularNote(int noteId) {
+		Connection con = getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String query = "SELECT * FROM NOTES WHERE NOTES_ID = " + noteId;
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs != null) {
+				while (rs.next()) {
+					Notes d = new Notes();
+					d.setSubjectId(rs.getInt("SUBJECT_ID"));
+					d.setNotesId(rs.getInt("NOTES_ID"));
+					d.setContent(rs.getBlob("CONTENT"));
+					d.setPostedBy(rs.getInt("POSTEDBY"));
+					d.setUpdatedTime(rs.getString("UPDATED_TIME"));
+					d.setUploadedTime(rs.getString("UPLOADED_TIME"));
+					d.setUploadedBy(rs.getString("UPLOADED_BY"));
+					return d;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con);
+		}
+		return null;
 	}
 }

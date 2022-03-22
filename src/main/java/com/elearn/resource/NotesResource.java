@@ -18,25 +18,25 @@ import javax.ws.rs.core.UriInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.elearn.storage.ApplicationDataStorage;
-import com.elearn.storage.model.Category;
+import com.elearn.storage.NotesStorage;
 import com.elearn.storage.model.Notes;
 
-@Path("/notes")
+@Path("/{cateory-id}/{department-id}/{subject-id}/notes")
 public class NotesResource {
 
 	@Context
 	UriInfo uriInfo;
 	@Context
 	HttpServletRequest httpRequest;
-	
-	@Path("/notes")
+
+	@Path("/all")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getANotes() {
-		List<Note> noteList = NotesStorage.getAllNotes();
+	public Response getAllNotesForASubject(@PathParam("category-id") Integer categoryId,
+			@PathParam("department-id") Integer departmentId, @PathParam("subject-id") Integer subjectId) {
+		List<Notes> noteList = NotesStorage.getNotes(subjectId);
 		JSONArray noteArr = new JSONArray();
-		for (Note d : noteList) {
+		for (Notes d : noteList) {
 			JSONObject obj = new JSONObject();
 			obj.put("subjectid", d.getSubjectId() + "");
 			obj.put("notesid", d.getNotesId() + "");
@@ -50,49 +50,56 @@ public class NotesResource {
 		return ResponseUtil.writeJSONArrayRespnseToClient(noteArr);
 	}
 
-	@Path("/note")
+	@Path("/{note-id}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getANote(@PathParam("category-id") Integer categoryId,
+			@PathParam("department-id") Integer departmentId, @PathParam("subject-id") Integer subjectId,
+			@PathParam("note-id") Integer noteId) {
+		Notes note = NotesStorage.getParticularNote(noteId);
+		JSONObject obj = new JSONObject();
+		obj.put("subjectid", note.getSubjectId() + "");
+		obj.put("notesid", note.getNotesId() + "");
+		obj.put("postedBy", note.getPostedBy());
+		obj.put("uploadedTime", note.getUploadedTime());
+		obj.put("updatedTime", note.getUpdatedTime());
+		obj.put("content", note.getContent());
+		obj.put("updatedBy", note.getUpdatedBy());
+		return ResponseUtil.writeJSONObjectRespnseToClient(obj);
+	}
+
+	@Path("/")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response postRequest() {
-		String uploadedTime= httpRequest.getParameter("uploadedTime");
-        NotesStorage.addNote(uploadedTime);
-        Int subjectId=httpRequest.getParameter("subjectId");
-        NotesStorage.addNote(subjectId);
-        Int postedBy=httpRequest.getParameter("postedBy");
-        NotesStorage.addNote(postedBy);
+	public Response postRequest(@PathParam("category-id") Integer categoryId,
+			@PathParam("department-id") Integer departmentId, @PathParam("subject-id") Integer subjectId) {
+		String uploadedTime = httpRequest.getParameter("uploadedTime");
+		Integer postedBy = Integer.parseInt(httpRequest.getParameter("postedBy"));
+		NotesStorage.addNotes(subjectId, postedBy, uploadedTime);
 		return ResponseUtil.writeSuccessRespnseToClient();
-		
-	
+
 	}
 
-	@Path("/note/{subject-id}")
+	@Path("/{note-id}")
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateNote(@PathParam("subject-Id") int subjectId) {
-		Int subjectId = httpRequest.getParameter("subjectId");
-		NotesStorage.updateNote(subjectId, subjectId);
-		Int postedBy =httpRequest.getParameter("postedBy");
-		NotesStorage.updateNote(postedBy, postedBy);
-		String uploadedTime = httpRequest.getParameter("uploadedTime");
-		NotesStorage.updatenote(uploadedTime, uploadedTime);
+	public Response updateNote(@PathParam("category-id") Integer categoryId,
+			@PathParam("department-id") Integer departmentId, @PathParam("subject-id") Integer subjectId,
+			@PathParam("note-id") Integer noteId) {
 		String updatedTime = httpRequest.getParameter("updatedTime");
-		NOtesStorage.updateNote(updatedTime, updatedTime);
-		Int updatedBy =httpRequest.getParameter("updatedBy");
-		NotesStorage.updateNote(updatedBy, updateBy);
-		
+		Integer updatedBy = Integer.parseInt(httpRequest.getParameter("updatedBy"));
+		NotesStorage.updateNotes(noteId, updatedTime, updatedBy);
 		return ResponseUtil.writeSuccessRespnseToClient();
 	}
 
-	@Path("/note/{subject-id}")
+	@Path("/{note-id}")
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteNote(@PathParam("Subject-Id") int subjectId) {
-		NotesStorage.deleteNote(subjectId);
+	public Response deleteNote(@PathParam("category-id") Integer categoryId,
+			@PathParam("department-id") Integer departmentId, @PathParam("subject-id") Integer subjectId,
+			@PathParam("note-id") Integer noteId) {
+		NotesStorage.deleteNote(noteId);
 		return ResponseUtil.writeSuccessRespnseToClient();
 	}
 
 }
-
-
-
-
