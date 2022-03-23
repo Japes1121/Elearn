@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import com.elearn.storage.DiscussionStorage;
 import com.elearn.storage.model.Discussion;
 
-@Path("/{cateory-id}/{department-id}/{subject-id}{notes-id}/discussion")
+@Path("application/category/{category-id}/department/{department-id}/subject/{subject-id}/notes/{notes-id}/discussion")
 public class DiscussionDataResource {
 
 	@Context
@@ -29,7 +29,7 @@ public class DiscussionDataResource {
 	@Context
 	HttpServletRequest httpRequest;
 
-	@Path("/all")
+	@Path("application/category/{category-id}/department/{department-id}/subject/{subject-id}/notes/{notes-id}/discussion/all")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllDiscussionForANotes(@PathParam("category-id") Integer categoryId,
@@ -49,7 +49,7 @@ public class DiscussionDataResource {
 		return ResponseUtil.writeJSONArrayRespnseToClient(disArr);
 	}
 
-	@Path("/{discussion-id}")
+	@Path("application/category/{category-id}/department/{department-id}/subject/{subject-id}/notes/{notes-id}/discussion/{discussion-id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getANote(@PathParam("category-id") Integer categoryId,
@@ -67,7 +67,7 @@ public class DiscussionDataResource {
 		return ResponseUtil.writeJSONObjectRespnseToClient(obj);
 	}
 
-	@Path("/")
+	@Path("pplication/category/{category-id}/department/{department-id}/subject/{subject-id}/notes/{notes-id}/discussion")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response postRequest(@PathParam("category-id") Integer categoryId,
@@ -79,7 +79,7 @@ public class DiscussionDataResource {
 
 	}
 
-	@Path("/{discussion-id}")
+	@Path("pplication/category/{category-id}/department/{department-id}/subject/{subject-id}/notes/{notes-id}/discussion/{discussion-id}")
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateDiscussion(@PathParam("category-id") Integer categoryId,
@@ -90,7 +90,7 @@ public class DiscussionDataResource {
 		return ResponseUtil.writeSuccessRespnseToClient();
 	}
 
-	@Path("/{discussion-id}")
+	@Path("pplication/category/{category-id}/department/{department-id}/subject/{subject-id}/notes/{notes-id}/discussion/{discussion-id}")
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteNote(@PathParam("category-id") Integer categoryId,
